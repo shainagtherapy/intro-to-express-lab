@@ -8,12 +8,11 @@ const app = express()
 // callback function -->
 //    every one has to reference a request object and response object in the params
 
-// //Exercise 1
-// app.get('/:greetings', (req, res) => {
-//     const username = req.query.username;
-
-//     res.send(`What a delight to see you again, ${username}!`)
-// });
+//Exercise 1
+app.get('/greetings/:username', (req, res) => {
+    const username = req.params.username;
+    res.send(`What a delight to see you again, ${username}!`) //http://localhost:3000/greetings/ShainaG
+});
 
 app.listen(3000, () => {
     console.log('listening on port 3000')
@@ -35,7 +34,7 @@ app.get('/roll/:number', (req,res) => {
 
 
 // Exercise 3
-app.get('/collectibles/item', (req,res) => {
+app.get('/collectibles/:item', (req,res) => {
     
     const collectibles = [
     { name: 'shiny ball', price: 5.95 },
@@ -43,12 +42,13 @@ app.get('/collectibles/item', (req,res) => {
     { name: 'vintage 1970s yogurt SOLD AS-IS', price: 0.99 }
     ]
 
-    const item = req.params.index;
+    const index = Number(req.params.item);
+    const item = collectibles[index];
 
     if (!item) {
         res.send(`This item is not yet in stock. Check back soon!`)
     } else
-        res.send(`So you want the ${item.name}? For ${price}, it can be yours!`)
+        res.send(`So you want the ${item.name}? For ${item.price}, it can be yours!`)
     
 })
 
