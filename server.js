@@ -66,26 +66,30 @@ app.get('/shoes', (req,res) => {
 
 
 let filteredShoes = shoes;
-// parseInt?
 
-const minPrice = req.query['min-price'];
-const maxPrice = req.query['max-price'];
-const shoeType = req.query.type;
+const minPrice = Number(req.query['min-price']);
+const maxPrice = Number(req.query['max-price']);
+
 
 if (minPrice) {
-    filteredShoes = filteredShoes.filter(shoe => shoe.price >= Number(minPrice))
+    filteredShoes = filteredShoes.filter(shoe => shoe.price >= minPrice)
 }
-//res.send(`Shoes over $50: ${minPrice}`)
+
 
 if (maxPrice) {
-    filteredShoes = filteredShoes.filter(shoe => shoe.price <= Number(maxPrice))
+    filteredShoes = filteredShoes.filter(shoe => shoe.price <= maxPrice)
 }
 //res.send(`Shoes under ${maxPrice}`)
-
+const shoeType = req.query.type;
 if (shoeType) {
     filteredShoes = filteredShoes.filter(shoe => shoe.type === shoeType);
 }
 
-res.send(`Shoes over $50: ${minPrice}`)
+res.json(filteredShoes); // This shows a dark screen and I looked this up but still not sure, is this an error?!
+
 });
 
+// localhost:3000/hello?name=Christy&age=32
+// app.get('/hello', (req, res) => {
+//     res.send(`Hello there, ${req.query.name}! I hear you are ${req.query.age} years old!`);
+// });
